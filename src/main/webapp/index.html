@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -716,10 +714,6 @@
                 <li><a href="#solutions">Soluciones</a></li>
                 <li><a href="#about">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
-                <!-- Ejemplo de elemento dinámico -->
-                <c:if test="${not empty sessionScope.usuario}">
-                    <li><a href="/perfil">Mi Perfil</a></li>
-                </c:if>
             </ul>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -746,22 +740,55 @@
         </div>
     </section>
 
-    <!-- Features Section - Ahora con datos dinámicos -->
+    <!-- Features Section -->
     <section class="features" id="features">
         <div class="section-title animate-fadeIn">
             <h2>Nuestros Servicios</h2>
             <p>Ofrecemos soluciones completas de Big Data para ayudarte a aprovechar al máximo tus datos.</p>
         </div>
         <div class="features-grid">
-            <c:forEach var="servicio" items="${servicios}">
-                <div class="feature-card animate-fadeIn delay-${servicio.delay}">
-                    <div class="feature-icon">
-                        <i class="${servicio.icono}"></i>
-                    </div>
-                    <h3>${servicio.titulo}</h3>
-                    <p>${servicio.descripcion}</p>
+            <div class="feature-card animate-fadeIn delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
                 </div>
-            </c:forEach>
+                <h3>Análisis Predictivo</h3>
+                <p>Utilizamos modelos avanzados de machine learning para predecir tendencias futuras y comportamientos, permitiéndote tomar decisiones proactivas.</p>
+            </div>
+            <div class="feature-card animate-fadeIn delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3>Almacenamiento en la Nube</h3>
+                <p>Soluciones escalables y seguras para almacenar y gestionar tus datos, con acceso desde cualquier lugar y en cualquier momento.</p>
+            </div>
+            <div class="feature-card animate-fadeIn delay-3">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Procesamiento con IA</h3>
+                <p>Aplicamos inteligencia artificial para procesar grandes volúmenes de datos y extraer información valiosa automáticamente.</p>
+            </div>
+            <div class="feature-card animate-fadeIn delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Seguridad de Datos</h3>
+                <p>Protegemos tu información con los más altos estándares de seguridad y protocolos de encriptación avanzados.</p>
+            </div>
+            <div class="feature-card animate-fadeIn delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Visualización en Tiempo Real</h3>
+                <p>Dashboards interactivos que muestran tus KPIs y métricas más importantes actualizados en tiempo real.</p>
+            </div>
+            <div class="feature-card animate-fadeIn delay-3">
+                <div class="feature-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>Integración de Sistemas</h3>
+                <p>Conectamos todas tus fuentes de datos en una plataforma unificada para un análisis completo y coherente.</p>
+            </div>
         </div>
     </section>
 
@@ -772,63 +799,92 @@
                 <h2>Visualización de Datos Avanzada</h2>
                 <p>Nuestras herramientas de visualización transforman datos complejos en insights claros y accionables. Con gráficos interactivos y dashboards personalizados, puedes explorar tus datos de manera intuitiva.</p>
                 <ul style="margin-top: 1.5rem; list-style-type: none;">
-                    <c:forEach var="ventaja" items="${ventajasVisualizacion}">
-                        <li style="margin-bottom: 0.8rem; display: flex; align-items: flex-start;">
-                            <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
-                            <span>${ventaja}</span>
-                        </li>
-                    </c:forEach>
+                    <li style="margin-bottom: 0.8rem; display: flex; align-items: flex-start;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
+                        <span>Gráficos interactivos y personalizables</span>
+                    </li>
+                    <li style="margin-bottom: 0.8rem; display: flex; align-items: flex-start;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
+                        <span>Actualización en tiempo real</span>
+                    </li>
+                    <li style="margin-bottom: 0.8rem; display: flex; align-items: flex-start;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
+                        <span>Compatibilidad con múltiples fuentes de datos</span>
+                    </li>
+                    <li style="display: flex; align-items: flex-start;">
+                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
+                        <span>Acceso desde cualquier dispositivo</span>
+                    </li>
                 </ul>
                 <a href="#contact" class="btn btn-primary" style="margin-top: 1.5rem;">Solicitar Demo</a>
             </div>
             <div class="data-viz-image animate-fadeIn delay-1">
                 <div class="viz-chart">
-                    <c:forEach var="valor" items="${valoresGrafico}">
-                        <div class="viz-bar" style="height: ${valor}%;"></div>
-                    </c:forEach>
+                    <div class="viz-bar" style="height: 30%;"></div>
+                    <div class="viz-bar" style="height: 50%;"></div>
+                    <div class="viz-bar" style="height: 70%;"></div>
+                    <div class="viz-bar" style="height: 90%;"></div>
+                    <div class="viz-bar" style="height: 60%;"></div>
+                    <div class="viz-bar" style="height: 40%;"></div>
+                    <div class="viz-bar" style="height: 80%;"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section - Ahora dinámico -->
+    <!-- Testimonials Section -->
     <section class="testimonials" id="about">
         <div class="section-title animate-fadeIn">
             <h2>Lo que dicen nuestros clientes</h2>
             <p>Empresas líderes confían en nuestras soluciones de Big Data para impulsar su crecimiento.</p>
         </div>
         <div class="testimonials-grid">
-            <c:forEach var="testimonio" items="${testimonios}">
-                <div class="testimonial-card animate-fadeIn delay-${testimonio.delay}">
-                    <p class="testimonial-content">${testimonio.contenido}</p>
-                    <div class="testimonial-author">
-                        <img src="${testimonio.foto}" alt="Cliente" class="author-avatar">
-                        <div class="author-info">
-                            <h4>${testimonio.nombre}</h4>
-                            <p>${testimonio.cargo}, ${testimonio.empresa}</p>
-                        </div>
+            <div class="testimonial-card animate-fadeIn delay-1">
+                <p class="testimonial-content">DataSphere revolucionó nuestra forma de analizar los datos de clientes. En 3 meses aumentamos nuestras conversiones en un 35% gracias a sus insights.</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" class="author-avatar">
+                    <div class="author-info">
+                        <h4>María González</h4>
+                        <p>Directora de Marketing, TechCorp</p>
                     </div>
                 </div>
-            </c:forEach>
+            </div>
+            <div class="testimonial-card animate-fadeIn delay-2">
+                <p class="testimonial-content">La plataforma de análisis predictivo nos ha permitido optimizar nuestra cadena de suministro, reduciendo costos en un 22% anual.</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Carlos Martínez</h4>
+                        <p>COO, LogiSolutions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card animate-fadeIn delay-3">
+                <p class="testimonial-content">Su equipo de científicos de datos hizo en 2 semanas lo que nuestro departamento interno no pudo en 6 meses. Increíble valor.</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Ana López</h4>
+                        <p>Directora de TI, FinanciaGroup</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- CTA Section - Con procesamiento de formulario -->
+    <!-- CTA Section -->
     <section class="cta" id="contact">
         <div class="cta-container animate-fadeIn">
             <h2>¿Listo para transformar tus datos?</h2>
             <p>Contáctanos hoy mismo y descubre cómo podemos ayudarte a aprovechar el poder de tus datos.</p>
-            <form class="cta-form" action="procesarContacto.jsp" method="POST">
-                <input type="email" name="email" placeholder="Ingresa tu correo electrónico" class="cta-input" required>
+            <form class="cta-form">
+                <input type="email" placeholder="Ingresa tu correo electrónico" class="cta-input" required>
                 <button type="submit" class="cta-button">Enviar</button>
             </form>
-            <c:if test="${not empty mensaje}">
-                <p style="margin-top: 1rem; color: #fff; font-weight: bold;">${mensaje}</p>
-            </c:if>
         </div>
     </section>
 
-    <!-- Footer - Con año dinámico -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-about">
@@ -844,7 +900,7 @@
                     <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-           <div class="footer-links">
+            <div class="footer-links">
                 <h3>Enlaces Rápidos</h3>
                 <ul>
                     <li><a href="#home">Inicio</a></li>
@@ -873,7 +929,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <script>document.write(new Date().getFullYear())</script> DataSphere. Todos los derechos reservados.</p>
+            <p>&copy; 2023 DataSphere. Todos los derechos reservados. | <a href="#" style="color: var(--primary);">Política de Privacidad</a> | <a href="#" style="color: var(--primary);">Términos de Servicio</a></p>
         </div>
     </footer>
 
@@ -882,7 +938,8 @@
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
         });
-	// Create random data points for visualization
+
+        // Create random data points for visualization
         const dataViz = document.querySelector('.data-visualization');
         if (dataViz) {
             for (let i = 0; i < 50; i++) {
