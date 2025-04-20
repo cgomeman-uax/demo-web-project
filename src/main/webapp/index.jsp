@@ -1,5 +1,973 @@
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataSphere | Soluciones Innovadoras en Big Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --success: #06d6a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.5;
+        }
+        
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-title span {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.6);
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .data-visualization {
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .data-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0.7;
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        /* Data Visualization Section */
+        .data-viz {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .data-viz::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.3;
+        }
+        
+        .data-viz-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .data-viz-content {
+            flex: 1;
+            padding-right: 3rem;
+        }
+        
+        .data-viz-image {
+            flex: 1;
+            position: relative;
+            height: 500px;
+        }
+        
+        .viz-chart {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .viz-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            margin: 0 5px;
+            position: relative;
+            animation: grow 1.5s ease-out forwards;
+            transform-origin: bottom;
+            opacity: 0;
+        }
+        
+        @keyframes grow {
+            0% { transform: scaleY(0); opacity: 0; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 5%;
+            background-color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 5rem;
+            color: rgba(58, 134, 255, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            color: #6c757d;
+            font-style: italic;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .cta-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .cta-button {
+            padding: 1rem 2rem;
+            background-color: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #343a40;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+        
+        .footer-logo h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-about p {
+            color: #adb5bd;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            color: #adb5bd;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-contact i {
+            margin-right: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-container, .data-viz-container {
+                flex-direction: column;
+            }
+            
+            .hero-content, .data-viz-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .hero-image, .data-viz-image {
+                width: 100%;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-form {
+                flex-direction: column;
+            }
+            
+            .cta-input {
+                border-radius: 50px;
+                margin-bottom: 1rem;
+            }
+            
+            .cta-button {
+                border-radius: 50px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
 <body>
-<h2>Hello World!</h2>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-database"></i>
+                <h1>DataSphere</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#features">Servicios</a></li>
+                <li><a href="#solutions">Soluciones</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <!-- Ejemplo de elemento dinámico -->
+                <c:if test="${not empty sessionScope.usuario}">
+                    <li><a href="/perfil">Mi Perfil</a></li>
+                </c:if>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content animate-fadeIn">
+                <h1 class="hero-title">Transforma tus datos en <span>información valiosa</span></h1>
+                <p class="hero-subtitle">Utilizamos inteligencia artificial y análisis avanzado para ayudarte a descubrir patrones, predecir tendencias y tomar decisiones basadas en datos.</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Consulta Gratis</a>
+                    <a href="#features" class="btn btn-secondary">Saber Más</a>
+                </div>
+            </div>
+            <div class="hero-image animate-fadeIn delay-1">
+                <div class="data-visualization">
+                    <!-- Data points will be added via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section - Ahora con datos dinámicos -->
+    <section class="features" id="features">
+        <div class="section-title animate-fadeIn">
+            <h2>Nuestros Servicios</h2>
+            <p>Ofrecemos soluciones completas de Big Data para ayudarte a aprovechar al máximo tus datos.</p>
+        </div>
+        <div class="features-grid">
+            <c:forEach var="servicio" items="${servicios}">
+                <div class="feature-card animate-fadeIn delay-${servicio.delay}">
+                    <div class="feature-icon">
+                        <i class="${servicio.icono}"></i>
+                    </div>
+                    <h3>${servicio.titulo}</h3>
+                    <p>${servicio.descripcion}</p>
+                </div>
+            </c:forEach>
+        </div>
+    </section>
+
+    <!-- Data Visualization Section -->
+    <section class="data-viz" id="solutions">
+        <div class="data-viz-container">
+            <div class="data-viz-content animate-fadeIn">
+                <h2>Visualización de Datos Avanzada</h2>
+                <p>Nuestras herramientas de visualización transforman datos complejos en insights claros y accionables. Con gráficos interactivos y dashboards personalizados, puedes explorar tus datos de manera intuitiva.</p>
+                <ul style="margin-top: 1.5rem; list-style-type: none;">
+                    <c:forEach var="ventaja" items="${ventajasVisualizacion}">
+                        <li style="margin-bottom: 0.8rem; display: flex; align-items: flex-start;">
+                            <i class="fas fa-check-circle" style="color: var(--success); margin-right: 0.5rem; margin-top: 0.2rem;"></i>
+                            <span>${ventaja}</span>
+                        </li>
+                    </c:forEach>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="margin-top: 1.5rem;">Solicitar Demo</a>
+            </div>
+            <div class="data-viz-image animate-fadeIn delay-1">
+                <div class="viz-chart">
+                    <c:forEach var="valor" items="${valoresGrafico}">
+                        <div class="viz-bar" style="height: ${valor}%;"></div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - Ahora dinámico -->
+    <section class="testimonials" id="about">
+        <div class="section-title animate-fadeIn">
+            <h2>Lo que dicen nuestros clientes</h2>
+            <p>Empresas líderes confían en nuestras soluciones de Big Data para impulsar su crecimiento.</p>
+        </div>
+        <div class="testimonials-grid">
+            <c:forEach var="testimonio" items="${testimonios}">
+                <div class="testimonial-card animate-fadeIn delay-${testimonio.delay}">
+                    <p class="testimonial-content">${testimonio.contenido}</p>
+                    <div class="testimonial-author">
+                        <img src="${testimonio.foto}" alt="Cliente" class="author-avatar">
+                        <div class="author-info">
+                            <h4>${testimonio.nombre}</h4>
+                            <p>${testimonio.cargo}, ${testimonio.empresa}</p>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </section>
+
+    <!-- CTA Section - Con procesamiento de formulario -->
+    <section class="cta" id="contact">
+        <div class="cta-container animate-fadeIn">
+            <h2>¿Listo para transformar tus datos?</h2>
+            <p>Contáctanos hoy mismo y descubre cómo podemos ayudarte a aprovechar el poder de tus datos.</p>
+            <form class="cta-form" action="procesarContacto.jsp" method="POST">
+                <input type="email" name="email" placeholder="Ingresa tu correo electrónico" class="cta-input" required>
+                <button type="submit" class="cta-button">Enviar</button>
+            </form>
+            <c:if test="${not empty mensaje}">
+                <p style="margin-top: 1rem; color: #fff; font-weight: bold;">${mensaje}</p>
+            </c:if>
+        </div>
+    </section>
+
+    <!-- Footer - Con año dinámico -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-database"></i>
+                    <h2>DataSphere</h2>
+                </div>
+                <p>Líderes en soluciones de Big Data e Inteligencia Artificial, ayudando a empresas a transformar datos en decisiones estratégicas desde 2015.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+           <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#features">Servicios</a></li>
+                    <li><a href="#solutions">Soluciones</a></li>
+                    <li><a href="#about">Nosotros</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#">Análisis Predictivo</a></li>
+                    <li><a href="#">Big Data Consulting</a></li>
+                    <li><a href="#">Machine Learning</a></li>
+                    <li><a href="#">Visualización de Datos</a></li>
+                    <li><a href="#">Integración de Sistemas</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Tecnológico 1234, Ciudad Digital</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@datasphere.com</p>
+                <p><i class="fas fa-clock"></i> Lunes a Viernes: 9:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> DataSphere. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+	// Create random data points for visualization
+        const dataViz = document.querySelector('.data-visualization');
+        if (dataViz) {
+            for (let i = 0; i < 50; i++) {
+                const point = document.createElement('div');
+                point.className = 'data-point';
+                
+                // Random position
+                const left = Math.random() * 90 + 5;
+                const top = Math.random() * 90 + 5;
+                
+                // Random size
+                const size = Math.random() * 8 + 4;
+                
+                // Random color opacity
+                const opacity = Math.random() * 0.5 + 0.3;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                
+                point.style.left = `${left}%`;
+                point.style.top = `${top}%`;
+                point.style.width = `${size}px`;
+                point.style.height = `${size}px`;
+                point.style.opacity = opacity;
+                point.style.animationDelay = `${delay}s`;
+                
+                // Random color
+                const colors = ['#3a86ff', '#8338ec', '#06d6a0', '#ff006e', '#fb5607'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                point.style.backgroundColor = randomColor;
+                
+                dataViz.appendChild(point);
+            }
+        }
+
+        // Animate bars on scroll
+        const animateOnScroll = () => {
+            const bars = document.querySelectorAll('.viz-bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.opacity = '1';
+                }, index * 200);
+            });
+        };
+
+        // Check if element is in viewport
+        const isInViewport = (el) => {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.bottom >= 0
+            );
+        };
+
+        // Handle scroll event
+        let animated = false;
+        window.addEventListener('scroll', () => {
+            const vizSection = document.querySelector('.data-viz-image');
+            if (vizSection && isInViewport(vizSection) {
+                if (!animated) {
+                    animateOnScroll();
+                    animated = true;
+                }
+            }
+        });
+
+        // Trigger animation if already in viewport on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const vizSection = document.querySelector('.data-viz-image');
+            if (vizSection && isInViewport(vizSection)) {
+                animateOnScroll();
+                animated = true;
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
